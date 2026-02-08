@@ -1,183 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Question 💌</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Question 💌</title>
 
-<style>
-  body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(135deg, #ffe4ec, #fff);
-    overflow: hidden;
-  }
-
-  .card {
-    width: 360px;
-    background: white;
-    border-radius: 26px;
-    padding: 18px;
-    text-align: center;
-    box-shadow: 0 20px 50px rgba(0,0,0,.15);
-    position: relative;
-  }
-
-  img {
-    width: 100%;
-    max-height: 460px;
-    object-fit: cover;
-    border-radius: 18px;
-    margin-bottom: 12px;
-  }
-
-  h1 {
-    margin: 10px 0;
-    font-size: 26px;
-  }
-
-  p {
-    font-size: 16px;
-    margin: 10px 0 16px;
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-  }
-
-  button {
-    border: none;
-    padding: 12px 22px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 999px;
-    cursor: pointer;
-  }
-
-  #yes {
-    background: #ff3b7a;
-    color: white;
-  }
-
-  #no {
-    background: white;
-    border: 1px solid #ccc;
-    position: relative;
-  }
-
-  .hint {
-    font-size: 13px;
-    opacity: .7;
-    margin-top: 12px;
-  }
-
-  .emoji {
-    position: fixed;
-    font-size: 20px;
-    pointer-events: none;
-    animation: floatUp 1.6s ease-out forwards;
-  }
-
-  @keyframes floatUp {
-    from {
-      transform: translateY(0) scale(1);
-      opacity: 1;
+  <style>
+    :root{
+      --pink:#ff3b7a;
+      --bg1:#ffe4ee;
+      --bg2:#fff;
     }
-    to {
-      transform: translateY(-120px) scale(1.4);
-      opacity: 0;
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(900px 700px at 20% 10%, var(--bg1), transparent),
+                  radial-gradient(900px 700px at 80% 90%, #fff1f7, transparent),
+                  linear-gradient(135deg, #ffe0ea, var(--bg2));
+      overflow:hidden;
     }
-  }
-</style>
+
+    .card{
+      width:min(380px, 92vw);
+      background: rgba(255,255,255,.92);
+      border-radius: 26px;
+      padding: 16px;
+      text-align:center;
+      box-shadow: 0 22px 60px rgba(0,0,0,.16);
+      border: 1px solid rgba(0,0,0,.06);
+      position: relative;
+    }
+
+    /* PHOTO: shows full image (no weird crop) */
+    .photoWrap{
+      width:100%;
+      height:460px;               /* make it tall */
+      border-radius:18px;
+      overflow:hidden;
+      background: #fff;           /* looks clean if image doesn't fill */
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: 0 12px 32px rgba(0,0,0,.12);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    #photo{
+      width:100%;
+      height:100%;
+      object-fit: contain;        /* FULL photo visible */
+      object-position: center;
+      display:block;
+    }
+
+    h1{
+      margin: 12px 0 8px;
+      font-size: 28px;
+      letter-spacing: -0.4px;
+    }
+    p{
+      margin: 10px 0 16px;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .buttons{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+
+    button{
+      border:none;
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: 800;
+      border-radius: 999px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease;
+    }
+    button:active{ transform: scale(.98); }
+
+    #yes{
+      background: var(--pink);
+      color:white;
+    }
+    #no{
+      background:white;
+      border: 1px solid rgba(0,0,0,.18);
+      color:#333;
+    }
+
+    .hint{
+      margin-top: 12px;
+      font-size: 13px;
+      opacity:.72;
+    }
+
+    /* Emoji trail */
+    .emoji{
+      position: fixed;
+      pointer-events:none;
+      font-size: 20px;
+      transform: translate(-50%, -50%);
+      animation: floatUp 1.6s ease-out forwards;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,.10));
+    }
+    @keyframes floatUp{
+      from{ opacity:1; transform: translate(-50%,-50%) translateY(0) scale(1); }
+      to{ opacity:0; transform: translate(-50%,-50%) translateY(-130px) scale(1.35); }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="card" id="card">
+    <div class="photoWrap">
+      <img id="photo" src="us.jpg" alt="Us" />
+    </div>
 
-<div class="card">
-  <img src="us.jpg" alt="Us">
+    <h1 id="title">Hey Bianca 💖</h1>
 
-  <h1>Hey Bianca 💖</h1>
+    <p id="question">
+      I have one important question for you…<br />
+      <strong>Will you be my Valentine?</strong>
+    </p>
 
-  <p>
-    I have one important question for you…<br>
-    <strong>Will you be my Valentine?</strong>
-  </p>
+    <div class="buttons">
+      <button id="yes">YES 💘</button>
+      <button id="no">No 🙃</button>
+    </div>
 
-  <div class="buttons">
-    <button id="yes">YES 💘</button>
-    <button id="no">No 🙃</button>
+    <div class="hint" id="hint">Try clicking “No” 😅</div>
   </div>
 
-  <div class="hint" id="hint">Try clicking “No” 😅</div>
-</div>
+  <script>
+    // ====== CONFIG ======
+    const HER_NAME = "Bianca";
+    const FROM_NAME = "LJ";
+    // ====================
 
-<script>
-  const no = document.getElementById("no");
-  const yes = document.getElementById("yes");
-  const hint = document.getElementById("hint");
+    const title = document.getElementById("title");
+    const card = document.getElementById("card");
+    const yes = document.getElementById("yes");
+    const no = document.getElementById("no");
+    const hint = document.getElementById("hint");
+    const question = document.getElementById("question");
 
-  const messages = [
-    "Are you sure? 😳",
-    "Waittt 😭",
-    "Nice try 😏",
-    "Not happening",
-    "Just say yes 💘"
-  ];
+    title.textContent = `Hey ${HER_NAME} 💖`;
 
-  let count = 0;
+    // ---------- Emoji trail (mouse + touch) ----------
+    const emojis = ["💖","💘","💕","💝","❤️","🥰","😍","🌹","✨"];
+    let lastTrail = 0;
 
-  function moveNo() {
-    count++;
+    function spawnEmoji(x, y){
+      const now = Date.now();
+      if (now - lastTrail < 70) return;   // frequency control
+      lastTrail = now;
 
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
+      const el = document.createElement("div");
+      el.className = "emoji";
+      el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      el.style.left = x + "px";
+      el.style.top  = y + "px";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1600);
+    }
 
-    no.style.position = "fixed";
-    no.style.left = x + "px";
-    no.style.top = y + "px";
+    window.addEventListener("mousemove", (e) => {
+      spawnEmoji(e.clientX, e.clientY);
+    });
 
-    yes.style.transform = `scale(${1 + count * 0.1})`;
-    hint.textContent = messages[Math.min(count - 1, messages.length - 1)];
-  }
+    window.addEventListener("touchmove", (e) => {
+      const t = e.touches && e.touches[0];
+      if (!t) return;
+      spawnEmoji(t.clientX, t.clientY);
+    }, { passive: true });
 
-  no.addEventListener("mouseenter", moveNo);
-  no.addEventListener("click", e => {
-    e.preventDefault();
-    moveNo();
-  });
+    // ---------- NO button dodge (super reliable) ----------
+    const phrases = [
+      "Are you sure? 😳",
+      "Waittt 🥺",
+      "Nice try 😭",
+      "Nope 😏",
+      "Just say yes 💘"
+    ];
+    let dodgeCount = 0;
 
-  yes.addEventListener("click", () => {
-    document.querySelector(".card").innerHTML = `
-      <h1>YAYYY 😭💖</h1>
-      <p>It’s official.<br>Happy Valentine’s Day 🥰</p>
-    `;
-  });
+    function dodgeNo(){
+      dodgeCount++;
 
-  // Emoji trail
-  const emojis = ["💖","💘","💕","💝","❤️","🥰","😍"];
-  let last = 0;
+      // Move the NO button freely around the screen
+      // Make sure it never goes off-screen
+      const pad = 16;
+      const rect = no.getBoundingClientRect();
+      const maxX = window.innerWidth  - rect.width  - pad;
+      const maxY = window.innerHeight - rect.height - pad;
 
-  window.addEventListener("mousemove", e => {
-    const now = Date.now();
-    if (now - last < 80) return;
-    last = now;
+      const x = Math.max(pad, Math.floor(Math.random() * maxX));
+      const y = Math.max(pad, Math.floor(Math.random() * maxY));
 
-    const emoji = document.createElement("div");
-    emoji.className = "emoji";
-    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    emoji.style.left = e.clientX + "px";
-    emoji.style.top = e.clientY + "px";
+      no.style.position = "fixed";
+      no.style.left = x + "px";
+      no.style.top  = y + "px";
+      no.style.zIndex = "9999";
 
-    document.body.appendChild(emoji);
-    setTimeout(() => emoji.remove(), 1600);
-  });
-</script>
+      // Make YES grow a bit each time
+      const scale = Math.min(1 + dodgeCount * 0.08, 1.9);
+      yes.style.transform = `scale(${scale})`;
 
+      hint.textContent = phrases[Math.min(dodgeCount - 1, phrases.length - 1)];
+    }
+
+    // Triggers that are HARD to defeat (desktop + mobile)
+    no.addEventListener("pointerenter", dodgeNo);
+    no.addEventListener("pointermove", dodgeNo);
+    no.addEventListener("pointerdown", (e) => { e.preventDefault(); dodgeNo(); });
+    no.addEventListener("click", (e) => { e.preventDefault(); dodgeNo(); });
+    no.addEventListener("touchstart", (e) => { e.preventDefault(); dodgeNo(); }, { passive:false });
+
+    // ---------- YES click ----------
+    yes.addEventListener("click", () => {
+      card.innerHTML = `
+        <h1 style="margin:12px 0 6px;font-size:30px;">YAYYY 😭💖</h1>
+        <p style="font-size:16px;line-height:1.45;margin:10px 0 0;">
+          It’s official. Happy Valentine’s Day 🥰<br><br>
+          — ${FROM_NAME}
+        </p>
+      `;
+
+      // Small celebration burst of emojis
+      const cx = window.innerWidth/2;
+      const cy = window.innerHeight/2;
+      for(let i=0;i<24;i++){
+        setTimeout(() => {
+          spawnEmoji(cx + (Math.random()*220-110), cy + (Math.random()*140-70));
+        }, i*30);
+      }
+    });
+
+    // If photo fails to load, show a helpful message instead of broken icon
+    document.getElementById("photo").addEventListener("error", () => {
+      hint.textContent = "Photo not found. Make sure it’s uploaded as 'us.jpg' in the repo root.";
+    });
+  </script>
 </body>
 </html>
